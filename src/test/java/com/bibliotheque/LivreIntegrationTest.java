@@ -24,6 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class LivreIntegrationTest {
 
+    private String token="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTk4ODU2Miwicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.KXWga9c0CFf5Gn-t40d9czto723OUYhggkg8zT48DZWClbg_VoYXQ9JFsAhhbHzPuPDZ4TNAhdb4P-aaDTCY4Q";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -37,7 +39,7 @@ public class LivreIntegrationTest {
     public void testGetLivres() throws Exception {
         //categorieRepository.save(new Categorie("code1","informatique"));
         //livreRepository.save(new Livre("isbn1", "title1", new Date(), 10, "auteur1", categorieRepository.findByCode("code1")));
-        mockMvc.perform(get("/livres").header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/livres").header("Authorization" , token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("_embedded.livres").exists())
                 .andExpect(jsonPath("_embedded.livres[*].isbn").isNotEmpty());
@@ -47,7 +49,7 @@ public class LivreIntegrationTest {
     public void testSearchByTitle() throws Exception {
         //categorieRepository.save(new Categorie("code2","finance"));
         //livreRepository.save(new Livre("isbn2", "title2", new Date(), 10, "auteur2", categorieRepository.findByCode("code2")));
-        mockMvc.perform(get("/livres/search/findByTitleContaining?titre=title2").header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/livres/search/findByTitleContaining?titre=title2").header("Authorization" , token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("_embedded.livres.[0].title", is("title2")));
     }
@@ -56,7 +58,7 @@ public class LivreIntegrationTest {
     public void testSearchByIsbn() throws Exception {
         //categorieRepository.save(new Categorie("code3","comptabilite"));
         //livreRepository.save(new Livre("isbn3", "title3", new Date(), 10, "auteur3", categorieRepository.findByCode("code3")));
-        mockMvc.perform(get("/livres/search/findByIsbn?isbn=isbn3").header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/livres/search/findByIsbn?isbn=isbn3").header("Authorization" , token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title", is("title3")));
     }
@@ -68,7 +70,7 @@ public class LivreIntegrationTest {
         JSONObject obj=new JSONObject();
         obj.put("auteur","auteur");
         Livre livre = livreRepository.findByIsbn("isbn4");
-        mockMvc.perform(patch("/livres/"+livre.getId()).header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA")
+        mockMvc.perform(patch("/livres/"+livre.getId()).header("Authorization" , token)
                 .content(String.valueOf(obj)))
                 .andExpect(status().is(204));
     }
@@ -78,7 +80,7 @@ public class LivreIntegrationTest {
         //categorieRepository.save(new Categorie("code5","physique"));
         //livreRepository.save(new Livre("isbn5", "title5", new Date(), 10, "auteur5", categorieRepository.findByCode("code5")));
         Livre livre = livreRepository.findByIsbn("isbn5");
-        mockMvc.perform(delete("/livres/"+livre.getId()).header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(delete("/livres/"+livre.getId()).header("Authorization" , token))
                 .andExpect(status().is(204));
     }
 

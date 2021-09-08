@@ -18,6 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class ClientIntegrationTest {
 
+    private String token="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTk4ODU2Miwicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.KXWga9c0CFf5Gn-t40d9czto723OUYhggkg8zT48DZWClbg_VoYXQ9JFsAhhbHzPuPDZ4TNAhdb4P-aaDTCY4Q";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -27,7 +29,7 @@ public class ClientIntegrationTest {
     @Test
     public void testGetClients() throws Exception {
         //clientRepository.save(new Client("hamzi", "amine", "developpeur informatique", "hay jawadi rue 39 N15","hamzimohammedhamzi@gmail.com", new Date()));
-        mockMvc.perform(get("/clients").header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/clients").header("Authorization" , token))
                 .andExpect(jsonPath("_embedded.clients").exists())
                 .andExpect(jsonPath("_embedded.clients[*].nom").isNotEmpty());
     }
@@ -35,7 +37,7 @@ public class ClientIntegrationTest {
     @Test
     public void testSearchByNom() throws Exception {
         //clientRepository.save(new Client("hamzi", "mostapha", "comptable", "hay jawadi rue 39 N15","hamzimostapha@gmail.com", new Date()));
-        mockMvc.perform(get("/clients/search/findByNomContaining?nom=hamzi").header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/clients/search/findByNomContaining?nom=hamzi").header("Authorization" , token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("_embedded.clients.[0].nom", is("hamzi")));
     }
@@ -43,7 +45,7 @@ public class ClientIntegrationTest {
     @Test
     public void testSearchByEmail() throws Exception {
         //clientRepository.save(new Client("guelsa", "mouna", "comptable", "hay jawadi rue 39 N15","guelsamouna@gmail.com", new Date()));
-        mockMvc.perform(get("/clients/search/findByEmail?email=guelsamouna@gmail.com").header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/clients/search/findByEmail?email=guelsamouna@gmail.com").header("Authorization" , token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email", is("guelsamouna@gmail.com")));
     }
@@ -54,7 +56,7 @@ public class ClientIntegrationTest {
         JSONObject obj=new JSONObject();
         obj.put("prenom","abd");
         Client client = clientRepository.findByEmail("hamziabdo@gmail.com");
-        mockMvc.perform(patch("/clients/"+client.getId()).header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA")
+        mockMvc.perform(patch("/clients/"+client.getId()).header("Authorization" , token)
                 .content(String.valueOf(obj)))
                 .andExpect(status().is(204));
     }
@@ -63,7 +65,7 @@ public class ClientIntegrationTest {
     public void testDeleteClient() throws Exception {
         //clientRepository.save(new Client("hamzi", "asmaa", "comptable", "hay jawadi rue 39 N15","hamziasmaa@gmail.com", new Date()));
         Client client = clientRepository.findByEmail("hamziasmaa@gmail.com");
-        mockMvc.perform(delete("/clients/"+client.getId()).header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(delete("/clients/"+client.getId()).header("Authorization" , token))
                 .andExpect(status().is(204));
     }
 

@@ -28,6 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class PretIntegrationTest {
 
+    private String token="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTk4ODU2Miwicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.KXWga9c0CFf5Gn-t40d9czto723OUYhggkg8zT48DZWClbg_VoYXQ9JFsAhhbHzPuPDZ4TNAhdb4P-aaDTCY4Q";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -50,7 +52,7 @@ public class PretIntegrationTest {
         clientRepository.save(new Client("hamzi", "amine", "developpeur informatique", "hay jawadi rue 39 N15","hamzimohammedhamzi@gmail.com", new Date()));
         pretRepository.save(new Pret(new Date(), new Date(), clientRepository.findByEmail("hamzimohammedhamzi@gmail.com"), livreRepository.findByIsbn("isbn1")));
 */
-        mockMvc.perform(get("/prets").header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/prets").header("Authorization" , token))
                 .andExpect(jsonPath("_embedded.prets").exists())
                 .andExpect(jsonPath("_embedded.prets[*].dateFin").isNotEmpty());
     }
@@ -64,7 +66,7 @@ public class PretIntegrationTest {
         */
         Long id = clientRepository.findByEmail("hamzimostapha@gmail.com").getId();
 
-        mockMvc.perform(get("/prets/search/findByClient?client=/clients/"+id).header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/prets/search/findByClient?client=/clients/"+id).header("Authorization" , token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("_embedded.prets").exists())
                 .andExpect(jsonPath("_embedded.prets[*].dateFin").isNotEmpty());
@@ -81,7 +83,7 @@ public class PretIntegrationTest {
         clientRepository.save(new Client("guelsa", "mouna", "comptable", "hay jawadi rue 39 N15","guelsamouna@gmail.com", new Date()));
         pretRepository.save(new Pret(date, new Date(), clientRepository.findByEmail("guelsamouna@gmail.com"), livreRepository.findByIsbn("isbn3")));
 */
-        mockMvc.perform(get("/prets/search/findByDateDebutLessThanEqual?date=2007-08-25").header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/prets/search/findByDateDebutLessThanEqual?date=2007-08-25").header("Authorization" , token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("_embedded.prets").exists())
                 .andExpect(jsonPath("_embedded.prets[*].dateFin").isNotEmpty());
@@ -99,7 +101,7 @@ public class PretIntegrationTest {
 
         Pret pret = pretRepository.findByClient(clientRepository.findByEmail("hamziabdo@gmail.com")).get(0);
 
-        mockMvc.perform(patch("/prets/"+pret.getId()).header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA")
+        mockMvc.perform(patch("/prets/"+pret.getId()).header("Authorization" , token)
                 .content(String.valueOf(obj)))
                 .andExpect(status().is(204));
     }
@@ -115,7 +117,7 @@ public class PretIntegrationTest {
         pretRepository.save(new Pret(date, new Date(), clientRepository.findByEmail("hamziasmaa@gmail.com"), livreRepository.findByIsbn("isbn5")));
 */
         Pret pret = pretRepository.findByDateDebut(dateDebut);
-        mockMvc.perform(delete("/prets/"+pret.getId()).header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(delete("/prets/"+pret.getId()).header("Authorization" , token))
                 .andExpect(status().is(200));
     }
 

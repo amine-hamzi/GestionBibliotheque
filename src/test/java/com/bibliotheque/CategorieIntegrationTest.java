@@ -22,6 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class CategorieIntegrationTest {
 
+    private String token="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTk4ODU2Miwicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.KXWga9c0CFf5Gn-t40d9czto723OUYhggkg8zT48DZWClbg_VoYXQ9JFsAhhbHzPuPDZ4TNAhdb4P-aaDTCY4Q";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -31,7 +33,7 @@ public class CategorieIntegrationTest {
     @Test
     public void testGetCategories() throws Exception {
         //categorieRepository.save(new Categorie("code1","informatique"));
-        mockMvc.perform(get("/categories").header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/categories").header("Authorization" , token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("_embedded.categories").exists())
                 .andExpect(jsonPath("_embedded.categories[*].code").isNotEmpty());
@@ -40,7 +42,7 @@ public class CategorieIntegrationTest {
     @Test
     public void testSearchByLabel() throws Exception {
         //categorieRepository.save(new Categorie("code2","finance"));
-        mockMvc.perform(get("/categories/search/findByLabelContaining?label=finan").header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(get("/categories/search/findByLabelContaining?label=finan").header("Authorization" , token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("_embedded.categories.[0].label", is("finance")));
     }
@@ -51,7 +53,7 @@ public class CategorieIntegrationTest {
         JSONObject obj=new JSONObject();
         obj.put("label","mathematiq");
         Categorie categorie = categorieRepository.findByCode("code4");
-        mockMvc.perform(patch("/categories/"+categorie.getId()).header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA")
+        mockMvc.perform(patch("/categories/"+categorie.getId()).header("Authorization" , token)
                 .content(String.valueOf(obj)))
                 .andExpect(status().is(204));
     }
@@ -61,7 +63,7 @@ public class CategorieIntegrationTest {
         //categorieRepository.save(new Categorie("code5","physique"));
 
         Categorie categorie = categorieRepository.findByCode("code6");
-        mockMvc.perform(delete("/categories/"+categorie.getId()).header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
+        mockMvc.perform(delete("/categories/"+categorie.getId()).header("Authorization" , token))
                 .andExpect(status().is(204));
     }
 
