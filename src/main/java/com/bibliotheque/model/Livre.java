@@ -22,9 +22,9 @@ public class Livre implements Serializable {
     private Date dateCreation;
     private int nbreExemplaires;
     private String auteur;
-    @OneToMany(mappedBy = "livre",fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "livre",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Collection<Pret> prets = new ArrayList<Pret>();
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Categorie categorie ;
 
     public Livre() {

@@ -17,10 +17,11 @@ public class Pret implements Serializable {
     private Long id;
     private Date dateDebut;
     private Date dateFin;
-    @ManyToOne
+
+    @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private Client client;
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private Livre livre;
 

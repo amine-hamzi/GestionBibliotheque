@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,12 +32,18 @@ public class BibliothequeApplication implements CommandLineRunner {
     @Autowired
     private PretRepository pretRepository;
 
+    @Autowired
+    private RepositoryRestConfiguration repositoryRestConfiguration;
+
     public static void main(String[] args) {
         SpringApplication.run(BibliothequeApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+        repositoryRestConfiguration.exposeIdsFor(Livre.class,
+                Client.class);
 
         categorieRepository.save(new Categorie("code1","informatique"));
         livreRepository.save(new Livre("isbn1", "title1", new Date(), 10, "auteur1", categorieRepository.findByCode("code1")));
@@ -70,11 +77,14 @@ public class BibliothequeApplication implements CommandLineRunner {
         livreRepository.save(new Livre("isbn5", "title5", new Date(), 10, "auteur5", categorieRepository.findByCode("code5")));
         clientRepository.save(new Client("hamzi", "asmaa", "comptable", "hay jawadi rue 39 N15","hamziasmaa@gmail.com", new Date()));
         pretRepository.save(new Pret(new Date(), new Date(), clientRepository.findByEmail("hamziasmaa@gmail.com"), livreRepository.findByIsbn("isbn5")));
-        pretRepository.save(new Pret(dateDebut, new Date(), clientRepository.findByEmail("hamziabdo@gmail.com"), livreRepository.findByIsbn("isbn4")));
+        pretRepository.save(new Pret(dateDebut, dateDebut, clientRepository.findByEmail("hamziabdo@gmail.com"), livreRepository.findByIsbn("isbn4")));
 
         categorieRepository.save(new Categorie("code6","Biologie"));
 
-
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+        String date3 = "04/09/2021";
+        Date dateFin = simpleDateFormat1.parse(date3);
+        System.out.println(pretRepository.findByDateFin(dateFin));
 
 
         /*System.out.println("*****************************");

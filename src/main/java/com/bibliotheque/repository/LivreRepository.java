@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @RepositoryRestResource
-@CrossOrigin(origins = "http://localhost:4200")
 @Transactional
 public interface LivreRepository extends JpaRepository<Livre, Long> {
     public Livre findByIsbn(String isbn);

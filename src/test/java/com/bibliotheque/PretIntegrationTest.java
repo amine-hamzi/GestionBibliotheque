@@ -116,7 +116,7 @@ public class PretIntegrationTest {
 */
         Pret pret = pretRepository.findByDateDebut(dateDebut);
         mockMvc.perform(delete("/prets/"+pret.getId()).header("Authorization" , "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYzMTA1NjUyMywicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.XGdU3pS02q2JSEoijTPsmJ3zGDS5jFXvjUplnizJy7_BbyFMuNKOJ_5Kb7EOc517ht8zLICiVC4c1hc6ZSMzPA"))
-                .andExpect(status().is(204));
+                .andExpect(status().is(200));
     }
 
 }

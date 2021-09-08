@@ -17,7 +17,7 @@ public class Categorie implements Serializable {
     private Long id;
     private String code;
     private String label;
-    @OneToMany(mappedBy = "categorie",fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "categorie",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Collection<Livre> livres = new ArrayList<Livre>();
 
     public Categorie() {
@@ -27,5 +27,14 @@ public class Categorie implements Serializable {
 
         this.code = code;
         this.label = label;
+    }
+
+    @Override
+    public String toString() {
+        return "Categorie{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", label='" + label + '\'' +
+                '}';
     }
 }

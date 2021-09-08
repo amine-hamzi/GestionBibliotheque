@@ -23,7 +23,7 @@ public class Client implements Serializable {
     private String adresse;
     private String email;
     private Date dateCreation;
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Collection<Pret> prets = new ArrayList<Pret>();
 
      public Client() {

@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @RepositoryRestResource
-@CrossOrigin(origins = "http://localhost:4200")
 @Transactional
 public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findByNomContaining(String nom);
