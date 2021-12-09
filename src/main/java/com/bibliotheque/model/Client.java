@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
- @Data
+@Data
 @Entity
 public class Client implements Serializable {
     @Id
@@ -23,8 +23,12 @@ public class Client implements Serializable {
     private String adresse;
     private String email;
     private Date dateCreation;
+    private Long retard = Long.valueOf(0);
+    private Date debutRetard ;
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Collection<Pret> prets = new ArrayList<Pret>();
+     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+     private Collection<Reservation> reservations = new ArrayList<Reservation>();
 
      public Client() {
      }

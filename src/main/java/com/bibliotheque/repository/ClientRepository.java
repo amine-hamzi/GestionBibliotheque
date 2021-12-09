@@ -12,5 +12,6 @@ import java.util.List;
 @Transactional
 public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findByNomContaining(String nom);
+    Client findByPrenom(String prenom);
     Client findByEmail(String email);
 }

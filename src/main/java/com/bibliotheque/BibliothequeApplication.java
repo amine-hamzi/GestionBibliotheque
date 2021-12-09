@@ -13,6 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,32 +21,41 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
 @SpringBootApplication
 public class BibliothequeApplication implements CommandLineRunner {
 
-    @Autowired
+
+    /*@Autowired
     private CategorieRepository categorieRepository;
     @Autowired
     private ClientRepository  clientRepository;
     @Autowired
     private LivreRepository livreRepository;
     @Autowired
-    private PretRepository pretRepository;
-
+    private PretRepository pretRepository;*/
     @Autowired
     private RepositoryRestConfiguration repositoryRestConfiguration;
+
+    //@Autowired
+    //private PretRepository pretRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(BibliothequeApplication.class, args);
     }
 
+
     @Override
     public void run(String... args) throws Exception {
 
-        repositoryRestConfiguration.exposeIdsFor(Livre.class,
-                Client.class);
+        repositoryRestConfiguration.exposeIdsFor(Livre.class,Client.class);
+        //Pret pret = pretRepository.getById(Long.valueOf(98));
+        /*System.out.println("************************");
+        Categorie categorie = categorieRepository.getById(Long.valueOf(75));
+        System.out.println(categorie.getLabel());*/
 
-        categorieRepository.save(new Categorie("code1","informatique"));
+
+        /*categorieRepository.save(new Categorie("code1","informatique"));
         livreRepository.save(new Livre("isbn1", "title1", new Date(), 10, "auteur1", categorieRepository.findByCode("code1")));
         clientRepository.save(new Client("hamzi", "amine", "developpeur informatique", "hay jawadi rue 39 N15","hamzimohammedhamzi@gmail.com", new Date()));
         pretRepository.save(new Pret(new Date(), new Date(), clientRepository.findByEmail("hamzimohammedhamzi@gmail.com"), livreRepository.findByIsbn("isbn1")));
@@ -84,22 +94,7 @@ public class BibliothequeApplication implements CommandLineRunner {
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
         String date3 = "04/09/2021";
         Date dateFin = simpleDateFormat1.parse(date3);
-        System.out.println(pretRepository.findByDateFin(dateFin));
+        System.out.println(pretRepository.findByDateFin(dateFin));*/
 
-
-        /*System.out.println("*****************************");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        String date1 = "22/06/2006";
-        Date date = simpleDateFormat.parse(date1);
-
-        Optional<Pret> pret = pretRepository.findById(Long.valueOf(17));
-        //pret.get().setClient(clientRepository.getById(Long.valueOf(2)));
-        //pretRepository.save(pret.get());
-
-
-        //Pret pret = pretRepository.getById(Long.valueOf(19));
-        //pretRepository.delete(pret);
-        System.out.println("******************************************************");*/
     }
 }
