@@ -25,7 +25,7 @@ public class Livre implements Serializable {
     @OneToMany(mappedBy = "livre",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Collection<Pret> prets = new ArrayList<Pret>();
     @ManyToOne(optional = false)
-    private Categorie categorie ;
+    private Categorie categorie;
     @OneToMany(mappedBy = "livre", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Collection<Reservation> reservations = new ArrayList<Reservation>();
 

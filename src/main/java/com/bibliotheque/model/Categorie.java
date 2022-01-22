@@ -1,8 +1,6 @@
 package com.bibliotheque.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +15,7 @@ public class Categorie implements Serializable {
     private Long id;
     private String code;
     private String label;
-    @OneToMany(mappedBy = "categorie",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "categorie",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Livre> livres = new ArrayList<Livre>();
 
     public Categorie() {
