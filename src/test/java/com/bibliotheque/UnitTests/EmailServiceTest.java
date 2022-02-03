@@ -24,12 +24,14 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
+@ActiveProfiles(profiles = { "test"})
 public class EmailServiceTest {
 
 

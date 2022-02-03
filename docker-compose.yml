@@ -1,0 +1,27 @@
+version: '2'
+services:
+  mysql-docker:
+    image: 'mysql:5.7'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=biblio
+    restart: always
+    volumes:
+      - /data/mysql:/var/lib/mysql
+    ports:
+      - "3307:3306"
+  spring-docker:
+    image: ambiblio_api
+    ports:
+      - "8088:8088"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-docker:3306/biblio?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root"
+    restart: always
+    build:
+      context: "./"
+      dockerfile: "Dockerfile"
+    depends_on:
+      - mysql-docker

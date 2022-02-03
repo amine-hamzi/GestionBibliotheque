@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 public class Pret implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date dateDebut;
     private Date dateFin;

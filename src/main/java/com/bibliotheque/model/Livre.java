@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 public class Livre implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String isbn;
     private String title;

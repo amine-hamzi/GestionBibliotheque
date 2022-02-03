@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 public class Client implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
     private String prenom;

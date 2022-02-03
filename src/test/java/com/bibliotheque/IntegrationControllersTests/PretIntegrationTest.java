@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("noauth")
+@ActiveProfiles(profiles = {"noauth", "test"})
 public class PretIntegrationTest {
 
 

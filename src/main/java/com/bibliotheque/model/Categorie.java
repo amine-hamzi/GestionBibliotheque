@@ -11,7 +11,7 @@ import java.util.Collection;
 @Entity
 public class Categorie implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String code;
     private String label;
