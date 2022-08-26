@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -68,6 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login/**").permitAll()
+                .antMatchers("/v2/api-docs",
+                        "/swagger-resources/**",
+                        "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthentificationFilter(authenticationManager()))
@@ -75,11 +79,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-        /*http.authorizeRequests()
+       /* http.authorizeRequests()
                 .anyRequest().permitAll();*/
 
 
     }
+
+   /* @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/swagger-ui/**",
+                "/webjars/**","/favicon.ico");
+    }*/
     @Bean
     BCryptPasswordEncoder getBCPE() {
         return new BCryptPasswordEncoder();
